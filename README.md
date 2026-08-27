@@ -287,7 +287,7 @@ Therefore fill rate is not inferred from ending inventory alone.
 
 # Clairvoyant realized-demand lower reference
 
-For every held-out realized trajectory, a deterministic LP is also solved with the **actual future demand** supplied to the optimizer.
+For every held-out realized trajectory, a deterministic LP is also solved with the *jactual future demand** supplied to the optimizer.
 
 That plan has information the practical policies do not have.
 
@@ -372,7 +372,7 @@ The conformal normalized trajectory radius was:
 3.660
 ```
 
-Again, `89.1%` empirical test coverage is not interpreted as a violation of a `90%` split-conformal marginal coverage theorem.
+Again, `89.1%` empirical test coverage is not interpreted as a violation of a `90%` split-conformal avg coverage theorem.
 
 ---
 
@@ -386,7 +386,7 @@ method                       mean cost   fill rate   stockout    order qty
 Deterministic                  2535.30      0.8846     0.4042      374.26
 Classical sigma robust         2430.50      0.9866     0.0750      414.68
 Marginal quantile robust       2556.37      0.9953     0.0271      431.81
-Conformal robust               2727.92      0.9974     0.0187      451.33
+Conformal robust                2727.92      0.9974     0.0187      451.33
 ```
 
 Mean cost gap versus the per-realization clairvoyant information-advantaged plan:
@@ -424,7 +424,7 @@ Distribution-aware SAA           2556.39      0.9512     0.1536     417.61
 Deterministic                    2950.73      0.8598     0.4944     417.76
 Classical sigma robust           2688.50      0.9792     0.1008     459.34
 Marginal quantile robust         2810.14      0.9891     0.0585     480.35
-Conformal robust                 2958.53      0.9919     0.0468     498.83
+Conformal robust                2958.53      0.9919     0.0468      498.83
 ```
 
 The information-advantaged SAA reference achieved the lowest mean cost in this small Monte Carlo fixture.
@@ -493,36 +493,4 @@ python run_conformal_inventory.py \
   --reference-eval-scenarios 384
 ```
 
-Disable the true-distribution reference:
-
-```bash
-python run_conformal_inventory.py --distribution-reference-contexts 0
-```
-
----
-
-# Exactness and scope
-
-Exact claims:
-
-- HiGHS solves the declared deterministic, SAA and robust LPs to its reported optimum;
-- the box-robust formulation enumerates every vertex of the declared uncertainty box;
-- for the declared convex inventory penalty, vertex enumeration gives the exact worst case over that box;
-- the one-period robust fixture is independently checked by dense enumeration;
-- the SAA objective is the exact sample-average LP objective for the supplied finite scenario set.
-
-Statistical claim:
-
-- the simultaneous conformal construction targets finite-sample marginal trajectory coverage under the standard split-conformal exchangeability assumptions.
-
-Not claimed:
-
-- conditional coverage for every feature vector;
-- robustness under arbitrary demand distribution shift;
-- that conformal coverage equals service level;
-- that the conformal robust plan minimizes expected cost;
-- that the synthetic benchmark represents a real company's demand process;
-- that vertex enumeration is scalable to long planning horizons;
-- that the finite-sample SAA reference is an exact true-distribution optimum.
-
-The purpose is to show how uncertainty quantification and optimization interact, including the operational price of conservative uncertainty sets.
+DdD “
